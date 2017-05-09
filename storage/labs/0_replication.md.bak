@@ -1,0 +1,9 @@
+
+```
+sudo -u hdfs hadoop fs -mkdir -p /vlin3
+sudo -u hdfs hadoop fs -mkdir -p /jasoncheng22
+
+sudo -u hdfs hadoop jar /opt/cloudera/parcels/CDH-5.9.2-1.cdh5.9.2.p0.3/lib/hadoop-0.20-mapreduce/hadoop-examples.jar teragen 5000000 /vlin3/input500MB
+
+
+```

@@ -1,0 +1,85 @@
+```
+[root@ip-172-31-34-74 /]# useradd vlin3
+[root@ip-172-31-34-74 /]# passwd vlin3
+Changing password for user vlin3.
+New password:
+BAD PASSWORD: it is based on a dictionary word
+Retype new password:
+passwd: all authentication tokens updated successfully.
+
+```
+
+```
+[root@ip-172-31-34-74 ~]# sudo -u hdfs hadoop fs -mkdir -p /user/vlin3
+[root@ip-172-31-34-74 ~]# sudo -u hdfs hadoop fs -chown -R vlin3:supergroup /user/vlin3
+[root@ip-172-31-34-74 ~]# su vlin3
+
+[vlin3@ip-172-31-34-74 /]$ time hadoop jar /opt/cloudera/parcels/CDH-5.9.2-1.cdh5.9.2.p0.3/lib/hadoop-0.20-mapreduce/hadoop-examples.jar teragen -Dmapred.map.tasks=4 -Ddfs.block.size=33554432 10000000 /user/vlin3/File10G
+17/05/09 07:59:22 INFO client.RMProxy: Connecting to ResourceManager at ip-172-31-34-74.us-west-2.compute.internal/172.31.34.74:8032
+17/05/09 07:59:23 INFO terasort.TeraSort: Generating 10000000 using 4
+17/05/09 07:59:23 INFO mapreduce.JobSubmitter: number of splits:4
+17/05/09 07:59:23 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+17/05/09 07:59:23 INFO Configuration.deprecation: dfs.block.size is deprecated. Instead, use dfs.blocksize
+17/05/09 07:59:23 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1494301175424_0010
+17/05/09 07:59:24 INFO impl.YarnClientImpl: Submitted application application_1494301175424_0010
+17/05/09 07:59:24 INFO mapreduce.Job: The url to track the job: http://ip-172-31-34-74.us-west-2.compute.internal:8088/proxy/application_1494301175424_0010/
+17/05/09 07:59:24 INFO mapreduce.Job: Running job: job_1494301175424_0010
+17/05/09 07:59:30 INFO mapreduce.Job: Job job_1494301175424_0010 running in uber mode : false
+17/05/09 07:59:30 INFO mapreduce.Job:  map 0% reduce 0%
+17/05/09 07:59:40 INFO mapreduce.Job:  map 50% reduce 0%
+17/05/09 07:59:43 INFO mapreduce.Job:  map 100% reduce 0%
+17/05/09 07:59:44 INFO mapreduce.Job: Job job_1494301175424_0010 completed successfully
+17/05/09 07:59:44 INFO mapreduce.Job: Counters: 31
+        File System Counters
+                FILE: Number of bytes read=0
+                FILE: Number of bytes written=494064
+                FILE: Number of read operations=0
+                FILE: Number of large read operations=0
+                FILE: Number of write operations=0
+                HDFS: Number of bytes read=337
+                HDFS: Number of bytes written=1000000000
+                HDFS: Number of read operations=16
+                HDFS: Number of large read operations=0
+                HDFS: Number of write operations=8
+        Job Counters
+                Launched map tasks=4
+                Other local map tasks=4
+                Total time spent by all maps in occupied slots (ms)=38233
+                Total time spent by all reduces in occupied slots (ms)=0
+                Total time spent by all map tasks (ms)=38233
+                Total vcore-seconds taken by all map tasks=38233
+                Total megabyte-seconds taken by all map tasks=39150592
+        Map-Reduce Framework
+                Map input records=10000000
+                Map output records=10000000
+                Input split bytes=337
+                Spilled Records=0
+                Failed Shuffles=0
+                Merged Map outputs=0
+                GC time elapsed (ms)=415
+                CPU time spent (ms)=30100
+                Physical memory (bytes) snapshot=1461755904
+                Virtual memory (bytes) snapshot=6257410048
+                Total committed heap usage (bytes)=1742209024
+        org.apache.hadoop.examples.terasort.TeraGen$Counters
+                CHECKSUM=21472776955442690
+        File Input Format Counters
+                Bytes Read=0
+        File Output Format Counters
+                Bytes Written=1000000000
+
+real    0m24.917s
+user    0m5.773s
+sys     0m0.726s
+```
+
+```
+[vlin3@ip-172-31-34-74 /]$ time hadoop jar /opt/cloudera/parcels/CDH-5.9.2-1.cdh5.9.2.p0.3/lib/hadoop-0.20-mapreduce/hadoop-examples.jar  terasort /user/vlin3/terasort-input /user/vlin3/terasort-output
+17/05/09 08:00:43 INFO terasort.TeraSort: starting
+17/05/09 08:00:45 ERROR terasort.TeraSort: Input path does not exist: hdfs://ip-172-31-34-74.us-west-2.compute.internal:8020/user/vlin3/terasort-input
+
+real    0m3.109s
+user    0m3.558s
+sys     0m0.533s
+```
+
