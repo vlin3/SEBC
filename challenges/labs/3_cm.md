@@ -1,11 +1,14 @@
 ##    The command and output for hdfs dfs -ls /user
 ```
-Found 5 items
-drwxrwxrwx   - mapred hadoop          0 2017-05-12 03:47 /user/history
-drwxrwxr-t   - hive   hive            0 2017-05-12 03:48 /user/hive
-drwxrwxr-x   - hue    hue             0 2017-05-12 03:48 /user/hue
-drwxrwxr-x   - impala impala          0 2017-05-12 03:48 /user/impala
-drwxrwxr-x   - oozie  oozie           0 2017-05-12 03:48 /user/oozie
+Found 8 items
+drwxr-xr-x   - admin  admin               0 2017-05-12 04:01 /user/admin
+drwxr-xr-x   - hdfs   supergroup          0 2017-05-12 04:01 /user/hdfs
+drwxrwxrwx   - mapred hadoop              0 2017-05-12 03:47 /user/history
+drwxrwxr-t   - hive   hive                0 2017-05-12 03:48 /user/hive
+drwxrwxr-x   - hue    hue                 0 2017-05-12 03:48 /user/hue
+drwxrwxr-x   - impala impala              0 2017-05-12 03:48 /user/impala
+drwxrwxr-x   - oozie  oozie               0 2017-05-12 03:48 /user/oozie
+drwxr-xr-x   - zhou   zhou                0 2017-05-12 04:10 /user/zhou
 ```
 
 ##    The command and output from the CM API call ../api/v14/hosts
