@@ -1,4 +1,5 @@
 1.Check  vm.swappiness  on all your nodes ?Set the value to  1  if necessary
+```
 [root@ip-172-31-41-122 ~]# cat /proc/sys/vm/swappiness
 60
 [root@ip-172-31-41-122 ~]# echo 1 > /proc/sys/vm/swappiness
@@ -7,10 +8,10 @@
 [root@ip-172-31-41-122 ~]# vi /etc/sysctl.conf
 
 vm.swappiness = 1
-
 [root@ip-172-31-41-122 ~]# sysctl -p
-
+```
 2.Show the mount attributes of your volume(s)
+```
 [root@ip-172-31-34-74 ~]# mount
 /dev/xvde on / type ext4 (rw)
 proc on /proc type proc (rw)
@@ -18,15 +19,17 @@ sysfs on /sys type sysfs (rw)
 devpts on /dev/pts type devpts (rw,gid=5,mode=620)
 tmpfs on /dev/shm type tmpfs (rw,rootcontext="system_u:object_r:tmpfs_t:s0")
 none on /proc/sys/fs/binfmt_misc type binfmt_misc (rw)
-
+```
 3.If you have  ext -based volumes, list the reserve space setting ?XFS volumes do not support reserve space
+```
 [root@ip-172-31-34-74 /]# tune2fs -l /dev/xvde | grep "Reserved block count"
 Reserved block count:     104857
 [root@ip-172-31-34-74 /]#
-
+```
 
 4.Disable transparent hugepage support
- vi /etc/grub.conf
+```
+vi /etc/grub.conf
  adding transparent_hugepage=never under "kernel", result as below
  reboot
 
@@ -39,8 +42,9 @@ title CentOS-6.5-x86_64-GA-03 2.6.32-431.el6.x86_64
         kernel /boot/vmlinuz-2.6.32-431.el6.x86_64 root=LABEL=centos_root ro transparent_hugepage=never
         initrd /boot/initramfs-2.6.32-431.el6.x86_64.img
 ========================================
-
+```
 5.List your network interface configuration
+```
 [root@ip-172-31-34-74 etc]# cat /etc/hosts
 127.0.0.1         localhost.localdomain localhost
 ::1             localhost6.localdomain6 localhost6
@@ -95,10 +99,11 @@ lo        Link encap:Local Loopback
           collisions:0 txqueuelen:0
           RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
 
-
+```
 6.Show that forward and reverse host lookups are correctly resolved
-•For  /etc/hosts , use  getent 
-•For DNS, use  nslookup 
+```
+â€¢For  /etc/hosts , use  getent 
+â€¢For DNS, use  nslookup 
 [root@ip-172-31-34-74 etc]# getent hosts ip-172-31-34-74.us-west-2.compute.internal
 172.31.34.74    ip-172-31-34-74.us-west-2.compute.internal
 [root@ip-172-31-34-74 etc]# getent hosts ip-172-31-41-122.us-west-2.compute.internal
@@ -135,7 +140,6 @@ Non-authoritative answer:
 Name:   ip-172-31-43-123.us-west-2.compute.internal
 Address: 172.31.43.123
 
-
 [root@ip-172-31-34-74 etc]# nslookup ip-172-31-44-9.us-west-2.compute.internal
 Server:         172.31.0.2
 Address:        172.31.0.2#53
@@ -151,20 +155,20 @@ Address:        172.31.0.2#53
 Non-authoritative answer:
 Name:   ip-172-31-44-74.us-west-2.compute.internal
 Address: 172.31.44.74
-
+```
 
 6.Show the  nscd  service is running
+```
 [root@ip-172-31-34-74 etc]# service nscd start
 Starting nscd:                                             [  OK  ]
 [root@ip-172-31-34-74 etc]# service nscd status
 nscd (pid 1107) is running...
-
+```
 
 7.Show the  ntpd  service is running
+```
 [root@ip-172-31-34-74 etc]# service ntpd start
 Starting ntpd:                                             [  OK  ]
 [root@ip-172-31-34-74 etc]# service ntpd status
 ntpd (pid  1184) is running...
-
-
-
+```
